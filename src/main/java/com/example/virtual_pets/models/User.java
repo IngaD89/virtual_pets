@@ -3,26 +3,43 @@ package com.example.virtual_pets.models;
 import com.example.virtual_pets.exceptions.UserAlreadyDeletedException;
 import com.example.virtual_pets.exceptions.UserRoleNotMatchException;
 import com.example.virtual_pets.models.enums.Role;
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Access(AccessType.FIELD)
+@Table(name = "users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
+
+    @Column(unique = true, nullable = false, length = 50)
     private String nickname;
+
+    @Column(unique = true, nullable = false, length = 255)
     private String email;
     @Embedded
     private Password password;
+
+    @Column(nullable = false)
     private boolean deleted;
+
+    public User() {
+    }
 
     public User(
             String nickname,

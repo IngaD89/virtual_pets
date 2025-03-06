@@ -1,0 +1,11 @@
+CREATE TABLE users (
+    id char(36) PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    nickname VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_salt BYTEA NOT NULL,
+    password_hash BYTEA NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE NOT NULL
+);
