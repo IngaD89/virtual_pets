@@ -1,4 +1,4 @@
-package com.example.virtual_pets;
+package com.example.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

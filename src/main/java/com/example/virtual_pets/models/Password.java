@@ -2,10 +2,12 @@ package com.example.virtual_pets.models;
 
 
 import com.example.virtual_pets.common.PasswordUtils;
+import jakarta.persistence.Embeddable;
+
 import java.util.Arrays;
 
+@Embeddable
 public class Password {
-
     private final byte[] salt;
     private final byte[] hash;
 
