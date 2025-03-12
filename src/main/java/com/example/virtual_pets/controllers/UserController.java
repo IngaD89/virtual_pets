@@ -1,7 +1,6 @@
 package com.example.virtual_pets.controllers;
 
-import com.example.virtual_pets.dto.UserDto;
-import com.example.virtual_pets.models.Password;
+import com.example.virtual_pets.dto.UserRequest;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +17,11 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User createdUser = userService.createUser(
-                userDto.getEmail(),
-                userDto.getNickname(),
-                userDto.getPassword()
+                userRequest.getEmail(),
+                userRequest.getNickname(),
+                userRequest.getPassword()
         );
         return ResponseEntity.ok(createdUser);
     }

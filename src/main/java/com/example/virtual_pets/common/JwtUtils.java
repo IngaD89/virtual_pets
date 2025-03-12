@@ -1,5 +1,6 @@
 package com.example.virtual_pets.common;
 
+import com.example.virtual_pets.models.enums.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class JwtUtils {
@@ -19,10 +21,15 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(UUID userID, Role role) {
         return Jwts.builder()
-                .claims(Map.of("sub", username, "iat", new Date(), "exp", new Date(System.currentTimeMillis() + EXPIRATION_TIME)))
-                .signWith(getSigningKey()) // YA NO SE USA SignatureAlgorithm AQUÍ
+                .claims(Map.of(
+                        "sub", userID,
+                        "role", role.name(),
+                        "iat", new Date(),
+                        "exp", new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                )
+                .signWith(getSigningKey())
                 .compact();
     }
 
@@ -38,6 +45,12 @@ public class JwtUtils {
             return false;
         }
     }
+
+    public Role extractRole(String token) {
+        Claims claims = extractClaims(token);
+        return Role.valueOf(claims.get("role", String.class));
+    }
+
 
     public Claims extractClaims(String token) {
         return Jwts

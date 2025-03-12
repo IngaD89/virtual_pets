@@ -3,15 +3,15 @@ package com.example.virtual_pets.dto;
 import com.example.virtual_pets.models.Password;
 import com.example.virtual_pets.models.User;
 
-public class UserDto {
+public class UserRequest {
     private String email;
     private String nickname;
     private String password;
 
-    public UserDto() {
+    public UserRequest() {
     }
 
-    public UserDto(String email, String nickname, String password) {
+    public UserRequest(String email, String nickname, String password) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;

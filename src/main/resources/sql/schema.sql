@@ -9,3 +9,13 @@ CREATE TABLE users (
     password_hash BYTEA NOT NULL,
     deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
+
+CREATE TABLE sessions(
+    id CHAR(36) PRIMARY KEY,
+    user_id CHAR(36),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    expired_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) CONSTRAINT fk_user_id REFERENCES users(id)
+);
+

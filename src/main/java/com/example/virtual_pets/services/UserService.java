@@ -2,9 +2,12 @@ package com.example.virtual_pets.services;
 
 import com.example.virtual_pets.exceptions.EmailAlreadyInUseException;
 import com.example.virtual_pets.exceptions.NicknameAlreadyInUseException;
+import com.example.virtual_pets.exceptions.UserNotFoundException;
 import com.example.virtual_pets.models.Password;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.repositories.UserRepository;
+
+import java.util.UUID;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -44,6 +47,13 @@ public class UserService {
         User user = new User(email, nickname, encodedPassword);
 
         return userRepository.save(user);
+    }
+
+    public User findUserById(UUID userID){
+        return this
+                .userRepository
+                .findById(userID)
+                .orElseThrow(UserNotFoundException::new);
     }
 
 }

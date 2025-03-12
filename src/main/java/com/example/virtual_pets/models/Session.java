@@ -1,15 +1,28 @@
 package com.example.virtual_pets.models;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
+@Entity
+@Table(name = "sessions")
 public class Session {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @Column(name = "user_id", nullable = false)
     private UUID userId;
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
+    @Column(name = "expired_at", nullable = false)
     private Instant expiredAt;
+
+    public Session() {
+    }
 
     public Session(UUID userId) {
         this.id = UUID.randomUUID();
