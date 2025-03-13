@@ -3,7 +3,7 @@ package com.example.application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication()
 public class VirtualPetsApplication {
 
 	public static void main(String[] args) {

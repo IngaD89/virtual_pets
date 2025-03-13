@@ -24,7 +24,7 @@ public class JwtUtils {
     public String generateToken(UUID userID, Role role) {
         return Jwts.builder()
                 .claims(Map.of(
-                        "sub", userID,
+                        "sub", userID.toString(),
                         "role", role.name(),
                         "iat", new Date(),
                         "exp", new Date(System.currentTimeMillis() + EXPIRATION_TIME))

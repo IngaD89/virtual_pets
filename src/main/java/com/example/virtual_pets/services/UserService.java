@@ -6,9 +6,11 @@ import com.example.virtual_pets.exceptions.UserNotFoundException;
 import com.example.virtual_pets.models.Password;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
 
