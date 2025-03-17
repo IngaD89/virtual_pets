@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class Pet {
+    //@GeneratedValue(generator = "UUID")
     private UUID id;
     private UUID ownerId;
     private Instant createdAt;
@@ -27,7 +28,7 @@ public class Pet {
     private boolean deleted;
 
     public Pet(UUID ownerId, String name, PetCharacter petCharacter) {
-        this.id = UUID.randomUUID();
+        //this.id = UUID.randomUUID();
         this.ownerId = ownerId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();

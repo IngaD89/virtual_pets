@@ -11,10 +11,14 @@ import java.util.Arrays;
 public class Password {
 
     @Column(name = "password_salt")
-    private final byte[] salt;
+    private byte[] salt;
 
     @Column(name = "password_hash")
-    private final byte[] hash;
+    private byte[] hash;
+
+
+    public Password() {
+    }
 
     public Password(byte[] salt, byte[] hash) {
         this.salt = salt;
@@ -24,6 +28,14 @@ public class Password {
     public Password(String plainTextPassword) {
         this.salt = PasswordUtils.generateSalt();
         this.hash = PasswordUtils.generateHash(plainTextPassword, this.salt);
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
+    public void setHash(byte[] hash) {
+        this.hash = hash;
     }
 
     public byte[] getSalt() {

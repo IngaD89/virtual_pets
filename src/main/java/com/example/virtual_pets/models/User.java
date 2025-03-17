@@ -14,7 +14,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -27,11 +27,12 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column(unique = true, nullable = false, length = 255)
+    private String email;
+
     @Column(unique = true, nullable = false, length = 50)
     private String nickname;
 
-    @Column(unique = true, nullable = false, length = 255)
-    private String email;
     @Embedded
     private Password password;
 
@@ -42,16 +43,16 @@ public class User {
     }
 
     public User(
-            String nickname,
             String email,
+            String nickname,
             Password password
     ) {
-        this.id = UUID.randomUUID();
+        //this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         this.role = Role.USER_BASIC;
-        this.nickname = nickname;
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.deleted = false;
     }

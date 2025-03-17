@@ -41,8 +41,8 @@ public class UserService {
             String nickname,
             String plainTextPassword
     ){
-        this.assertEmailInUse(email);
-        this.assertNicknameInUse(nickname);
+       // this.assertEmailInUse(email);
+       // this.assertNicknameInUse(nickname);
 
         Password encodedPassword = new Password(plainTextPassword);
 

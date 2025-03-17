@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(name = "sessions")
 public class Session {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     @Column(name = "user_id", nullable = false)
     private UUID userId;
@@ -25,7 +25,7 @@ public class Session {
     }
 
     public Session(UUID userId) {
-        this.id = UUID.randomUUID();
+        //this.id = UUID.randomUUID();
         this.userId = userId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
