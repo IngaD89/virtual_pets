@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,8 +35,8 @@ public class JwtUtils {
                     .claims(Map.of(
                             "sub", userID.toString(),
                             "role", role.name(),
-                            "iat", Instant.now(),
-                            "exp", Instant.now().plus(EXPIRATION_TIME, ChronoUnit.SECONDS).getEpochSecond()
+                            "iat", new Date(),
+                            "exp", new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000)
                     ))
                     .signWith(getSigningKey())
                     .compact();

@@ -25,9 +25,18 @@ public class SessionService {
     public User checkCredentials(String nickname, String password) {
         return this.userRepository
                 .findByNickname(nickname)
-                .filter(user -> user.getPassword().verifyPassword(password))
-                .orElseThrow(IncorrectCredentialsException::new);
-
+                //.filter(user -> user.getPassword().verifyPassword(password))
+                .map(user -> {
+                    System.out.println("Usuario encontrado: " + user.getNickname());
+                    boolean isValid = user.getPassword().verifyPassword(password);
+                    System.out.println("¿Contraseña válida?: " + isValid);
+                    return isValid ? user : null;
+                })
+                //.orElseThrow(IncorrectCredentialsException::new);
+                .orElseThrow(() -> {
+                    System.out.println("Credenciales incorrectas para nickname: " + nickname + " " + password);
+                    return new IncorrectCredentialsException();
+                });
     }
 
     public Session login(

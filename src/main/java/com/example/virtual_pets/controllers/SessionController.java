@@ -42,8 +42,8 @@ public class SessionController {
             @RequestBody LoginRequest loginRequest
     ){
         Session session = sessionService.login(
-                loginRequest.nickname(),
-                loginRequest.password()
+                loginRequest.getNickname(),
+                loginRequest.getPassword()
         );
 
         User user = userService.findUserById(session.getUserId());
