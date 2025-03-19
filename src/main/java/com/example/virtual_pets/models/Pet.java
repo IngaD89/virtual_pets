@@ -3,12 +3,19 @@ package com.example.virtual_pets.models;
 import com.example.virtual_pets.models.enums.PetCharacter;
 import com.example.virtual_pets.models.enums.PetStatus;
 import com.example.virtual_pets.models.enums.PetType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@Entity
+@Table(name = "pets")
 public class Pet {
-    //@GeneratedValue(generator = "UUID")
+    @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private UUID ownerId;
     private Instant createdAt;
@@ -22,9 +29,9 @@ public class Pet {
     private int energyLevel;
     private int hungerLevel;
     private int playfulnessLevel;
-    private int maxEnergy = 100;
-    private int maxHunger = 100;
-    private int maxPlayfulness = 100;
+    private int maxEnergy;
+    private int maxHunger;
+    private int maxPlayfulness;
     private boolean deleted;
 
     public Pet(UUID ownerId, String name, PetCharacter petCharacter) {
