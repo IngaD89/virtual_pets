@@ -1,8 +1,8 @@
 package com.example.virtual_pets.services;
 
-import com.example.virtual_pets.exceptions.EmailAlreadyInUseException;
-import com.example.virtual_pets.exceptions.NicknameAlreadyInUseException;
-import com.example.virtual_pets.exceptions.UserNotFoundException;
+import com.example.virtual_pets.exceptions.userExceptions.EmailAlreadyInUseException;
+import com.example.virtual_pets.exceptions.userExceptions.NicknameAlreadyInUseException;
+import com.example.virtual_pets.exceptions.userExceptions.UserNotFoundException;
 import com.example.virtual_pets.models.Password;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.repositories.UserRepository;

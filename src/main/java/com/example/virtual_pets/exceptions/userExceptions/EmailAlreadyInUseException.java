@@ -1,4 +1,4 @@
-package com.example.virtual_pets.exceptions;
+package com.example.virtual_pets.exceptions.userExceptions;
 
 public class EmailAlreadyInUseException extends RuntimeException{
     public EmailAlreadyInUseException() {

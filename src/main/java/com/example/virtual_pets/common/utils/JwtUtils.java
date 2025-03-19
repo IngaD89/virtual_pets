@@ -1,4 +1,4 @@
-package com.example.virtual_pets.common;
+package com.example.virtual_pets.common.utils;
 
 import com.example.virtual_pets.models.enums.Role;
 import io.jsonwebtoken.*;

@@ -1,7 +1,7 @@
 package com.example.virtual_pets.services;
 
-import com.example.virtual_pets.exceptions.AuthenticationException;
-import com.example.virtual_pets.exceptions.UserRoleNotMatchException;
+import com.example.virtual_pets.exceptions.authExceptios.AuthenticationException;
+import com.example.virtual_pets.exceptions.userExceptions.UserRoleNotMatchException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

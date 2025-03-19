@@ -1,4 +1,4 @@
-package com.example.virtual_pets.exceptions;
+package com.example.virtual_pets.exceptions.petExceptions;
 
 public class PetAlreadyDeletedException extends RuntimeException{
     public PetAlreadyDeletedException() {

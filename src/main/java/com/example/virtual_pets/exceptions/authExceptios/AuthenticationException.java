@@ -1,4 +1,4 @@
-package com.example.virtual_pets.exceptions;
+package com.example.virtual_pets.exceptions.authExceptios;
 
 public class AuthenticationException extends RuntimeException{
     public AuthenticationException(String message) {

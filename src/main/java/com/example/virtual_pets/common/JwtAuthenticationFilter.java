@@ -1,10 +1,10 @@
 package com.example.virtual_pets.common;
 
+import com.example.virtual_pets.common.utils.JwtUtils;
 import com.example.virtual_pets.models.enums.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

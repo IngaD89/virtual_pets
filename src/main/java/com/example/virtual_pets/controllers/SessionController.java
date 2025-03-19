@@ -1,9 +1,8 @@
 package com.example.virtual_pets.controllers;
 
-import com.example.virtual_pets.common.JwtUtils;
+import com.example.virtual_pets.common.utils.JwtUtils;
 import com.example.virtual_pets.dto.LoginRequest;
 import com.example.virtual_pets.dto.LoginResponse;
-import com.example.virtual_pets.dto.UserRequest;
 import com.example.virtual_pets.models.Session;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.services.SessionService;

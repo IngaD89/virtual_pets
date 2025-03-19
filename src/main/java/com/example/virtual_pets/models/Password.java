@@ -1,7 +1,7 @@
 package com.example.virtual_pets.models;
 
 
-import com.example.virtual_pets.common.PasswordUtils;
+import com.example.virtual_pets.common.utils.PasswordUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 

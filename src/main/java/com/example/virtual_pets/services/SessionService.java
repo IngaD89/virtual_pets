@@ -1,6 +1,6 @@
 package com.example.virtual_pets.services;
 
-import com.example.virtual_pets.exceptions.IncorrectCredentialsException;
+import com.example.virtual_pets.exceptions.authExceptios.IncorrectCredentialsException;
 import com.example.virtual_pets.models.Session;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.repositories.SessionRepository;

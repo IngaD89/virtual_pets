@@ -1,7 +1,7 @@
 package com.example.virtual_pets.models;
 
-import com.example.virtual_pets.exceptions.UserAlreadyDeletedException;
-import com.example.virtual_pets.exceptions.UserRoleNotMatchException;
+import com.example.virtual_pets.exceptions.userExceptions.UserAlreadyDeletedException;
+import com.example.virtual_pets.exceptions.userExceptions.UserRoleNotMatchException;
 import com.example.virtual_pets.models.enums.Role;
 import jakarta.persistence.*;
 

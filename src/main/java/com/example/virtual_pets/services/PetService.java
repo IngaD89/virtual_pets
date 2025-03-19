@@ -1,6 +1,10 @@
 package com.example.virtual_pets.services;
 
-import com.example.virtual_pets.exceptions.*;
+import com.example.virtual_pets.exceptions.authExceptios.UnauthorizedAccessException;
+import com.example.virtual_pets.exceptions.petExceptions.EmptyPetListException;
+import com.example.virtual_pets.exceptions.petExceptions.PetAlreadyDeletedException;
+import com.example.virtual_pets.exceptions.petExceptions.PetNotFoundException;
+import com.example.virtual_pets.exceptions.userExceptions.UserNotFoundException;
 import com.example.virtual_pets.models.Pet;
 import com.example.virtual_pets.models.User;
 import com.example.virtual_pets.models.enums.PetCharacter;

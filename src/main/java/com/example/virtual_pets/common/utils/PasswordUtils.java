@@ -1,4 +1,4 @@
-package com.example.virtual_pets.common;
+package com.example.virtual_pets.common.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
