@@ -4,6 +4,8 @@ import com.example.virtual_pets.exceptions.userExceptions.UserAlreadyDeletedExce
 import com.example.virtual_pets.exceptions.userExceptions.UserRoleNotMatchException;
 import com.example.virtual_pets.models.enums.Role;
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -3,19 +3,18 @@ package com.example.virtual_pets.models;
 import com.example.virtual_pets.models.enums.PetCharacter;
 import com.example.virtual_pets.models.enums.PetStatus;
 import com.example.virtual_pets.models.enums.PetType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.UUID;
+
+
+//TODO no funciona lombok
 
 @Entity
 @Table(name = "pets")
 public class Pet {
     @Id
-    @GeneratedValue(generator = "UUID")
     private UUID id;
     private UUID ownerId;
     private Instant createdAt;
@@ -34,8 +33,12 @@ public class Pet {
     private int maxPlayfulness;
     private boolean deleted;
 
+
+    public Pet() {
+    }
+
     public Pet(UUID ownerId, String name, PetCharacter petCharacter) {
-        //this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.ownerId = ownerId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();

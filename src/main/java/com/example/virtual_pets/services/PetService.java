@@ -2,6 +2,7 @@ package com.example.virtual_pets.services;
 
 import com.example.virtual_pets.exceptions.authExceptios.UnauthorizedAccessException;
 import com.example.virtual_pets.exceptions.petExceptions.EmptyPetListException;
+import com.example.virtual_pets.exceptions.petExceptions.InvalidPetNameException;
 import com.example.virtual_pets.exceptions.petExceptions.PetAlreadyDeletedException;
 import com.example.virtual_pets.exceptions.petExceptions.PetNotFoundException;
 import com.example.virtual_pets.exceptions.userExceptions.UserNotFoundException;
@@ -34,6 +35,7 @@ public class PetService {
     }
 
 
+    //TODO quitar el ownerId como parametro de creacion
     public Pet createPet(
             UUID ownerId,
             String name,
@@ -56,12 +58,17 @@ public class PetService {
     }
 
 
+    //TODO este metodo devuleve mensaje correcto con codigo incorecto al no encontrar ningun pet
     public List<Pet> getAllPets() {
         String userRole = authenticationService.getAuthenticatedUserRole();
         UUID userId = authenticationService.getAuthenticatedUserId();
 
         if (authenticationService.isAdmin(userRole)) {
-            List<Pet> allPets = this.petRepository.findAll();
+            List<Pet> allPets = this.petRepository
+                    .findAll()
+                    .stream()
+                    .filter(pet -> !pet.isDeleted())
+                    .toList();
             if (allPets.isEmpty()) {
                 throw new EmptyPetListException();
             }
@@ -98,7 +105,7 @@ public class PetService {
             pet.setUpdatedAt(Instant.now());
             return this.petRepository.save(pet);
         } else {
-            throw new IllegalArgumentException("Pet name can not be empty");
+            throw new InvalidPetNameException("Pet name can not be empty");
         }
 
     }
@@ -119,6 +126,7 @@ public class PetService {
             throw new PetAlreadyDeletedException("Pet with id " + pet.getId() + " already deleted");
         }
         pet.setDeleted(true);
+        pet.setUpdatedAt(Instant.now());
         return this.petRepository.save(pet);
     }
 }
