@@ -4,7 +4,9 @@ import com.example.virtual_pets.models.enums.PetCharacter;
 import com.example.virtual_pets.models.enums.PetStatus;
 import com.example.virtual_pets.models.enums.PetType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 
+import java.sql.Types;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -15,22 +17,44 @@ import java.util.UUID;
 @Table(name = "pets")
 public class Pet {
     @Id
+    @GeneratedValue
+    @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "owner_id", nullable = false)
     private UUID ownerId;
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
+    @Column(name = "last_fed_at", nullable = false)
     private Instant lastFedAt;
+    @Column(name = "last_played_at", nullable = false)
     private Instant lastPlayedAt;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pet_status", nullable = false)
     private PetStatus petStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pet_character", nullable = false)
     private PetCharacter petCharacter;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pet_type", nullable = false)
     private PetType petType;
+    @Column(nullable = false, length = 100)
     private String name;
+    @Column(name = "energy_level", nullable = false)
     private int energyLevel;
+    @Column(name = "hunger_level", nullable = false)
     private int hungerLevel;
+    @Column(name = "playfulness_level", nullable = false)
     private int playfulnessLevel;
+    @Column(name = "max_energy", nullable = false)
     private int maxEnergy;
+    @Column(name = "max_hunger", nullable = false)
     private int maxHunger;
+    @Column(name = "max_playfulness", nullable = false)
     private int maxPlayfulness;
+    @Column(nullable = false)
     private boolean deleted;
 
 
@@ -38,7 +62,6 @@ public class Pet {
     }
 
     public Pet(UUID ownerId, String name, PetCharacter petCharacter) {
-        this.id = UUID.randomUUID();
         this.ownerId = ownerId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();

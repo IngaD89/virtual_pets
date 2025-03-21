@@ -10,46 +10,69 @@ import java.util.Arrays;
 @Embeddable
 public class Password {
 
-    @Column(name = "password_salt")
-    private byte[] salt;
+    @Column(name = "password_salt", length = 64)
+    private String salt;
 
-    @Column(name = "password_hash")
-    private byte[] hash;
-
+    @Column(name = "password_hash", length = 128)
+    private String hash;
 
     public Password() {
     }
 
-    public Password(byte[] salt, byte[] hash) {
+    public Password(String salt, String hash) {
         this.salt = salt;
         this.hash = hash;
     }
 
     public Password(String plainTextPassword) {
-        this.salt = PasswordUtils.generateSalt();
-        this.hash = PasswordUtils.generateHash(plainTextPassword, this.salt);
+        byte[] saltBytes = PasswordUtils.generateSalt();
+        byte[] hashBytes = PasswordUtils.generateHash(plainTextPassword, saltBytes);
+
+        this.salt = bytesToHex(saltBytes);
+        this.hash = bytesToHex(hashBytes);
     }
 
-    public void setSalt(byte[] salt) {
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    public void setHash(byte[] hash) {
+    public void setHash(String hash) {
         this.hash = hash;
     }
 
-    public byte[] getSalt() {
+    public String getSalt() {
         return salt;
     }
 
-    public byte[] getHash() {
+    public String getHash() {
         return hash;
     }
 
     public boolean verifyPassword(String plainTextPassword){
-        return Arrays.equals(
-                this.hash,
-                PasswordUtils.generateHash(plainTextPassword, this.salt)
-        );
+        byte[] saltBytes = hexToBytes(this.salt);
+        byte[] expectedHash = PasswordUtils.generateHash(plainTextPassword, saltBytes);
+
+        return Arrays.equals(expectedHash, hexToBytes(this.hash));
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder hexString = new StringBuilder(2 * bytes.length);
+        for (byte b : bytes) {
+            hexString.append(String.format("%02x", b));
+        }
+        return hexString.toString();
+    }
+
+    private static byte[] hexToBytes(String hex) {
+        int length = hex.length();
+        byte[] data = new byte[length / 2];
+        for (int i = 0; i < length; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+                    + Character.digit(hex.charAt(i + 1), 16));
+        }
+        return data;
     }
 }
+
+
+

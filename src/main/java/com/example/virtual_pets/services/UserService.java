@@ -19,21 +19,15 @@ public class UserService {
     }
 
     private void assertEmailInUse(String email){
-        this.userRepository
-                .findAll()
-                .stream()
-                .filter(user -> email.equals(user.getEmail()))
-                .findFirst()
-                .orElseThrow(() -> new EmailAlreadyInUseException("Email: " + email + " already in use"));
+        if(this.userRepository.existsByEmail(email)){
+            throw new EmailAlreadyInUseException("Email " + email + " already in use");
+        }
     }
 
     private void assertNicknameInUse(String nickname){
-        this.userRepository
-                .findAll()
-                .stream()
-                .filter(user -> nickname.equals(user.getNickname()))
-                .findFirst()
-                .orElseThrow(() -> new NicknameAlreadyInUseException("Nickname: " + nickname + " already in use"));
+        if(this.userRepository.existsByEmail(nickname)){
+            throw new NicknameAlreadyInUseException("Nickname: " + nickname + " already in use");
+        }
     }
 
     public User createUser(
@@ -41,9 +35,8 @@ public class UserService {
             String nickname,
             String plainTextPassword
     ){
-       // this.assertEmailInUse(email);
-       // this.assertNicknameInUse(nickname);
-
+        this.assertEmailInUse(email);
+        this.assertNicknameInUse(nickname);
         Password encodedPassword = new Password(plainTextPassword);
 
         User user = new User(email, nickname, encodedPassword);

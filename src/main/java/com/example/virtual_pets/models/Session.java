@@ -1,7 +1,9 @@
 package com.example.virtual_pets.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 
+import java.sql.Types;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -10,8 +12,10 @@ import java.util.UUID;
 @Table(name = "sessions")
 public class Session {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue
+    @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "user_id", nullable = false)
     private UUID userId;
     @Column(name = "created_at", nullable = false, updatable = false)

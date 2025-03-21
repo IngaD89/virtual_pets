@@ -5,9 +5,11 @@ import org.apache.logging.log4j.Logger;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.UUID;
 
 public class PasswordUtils {
 
@@ -63,4 +65,5 @@ public class PasswordUtils {
             throw new RuntimeException("Error has been occurred while generating hash");
         }
     }
+
 }

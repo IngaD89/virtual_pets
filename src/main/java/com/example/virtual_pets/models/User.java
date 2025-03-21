@@ -3,20 +3,23 @@ package com.example.virtual_pets.models;
 import com.example.virtual_pets.exceptions.userExceptions.UserAlreadyDeletedException;
 import com.example.virtual_pets.exceptions.userExceptions.UserRoleNotMatchException;
 import com.example.virtual_pets.models.enums.Role;
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
+import java.sql.Types;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Access(AccessType.FIELD)
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue
+    @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
 
     @Column(name = "created_at", nullable = false, updatable = false)
