@@ -2,6 +2,8 @@ package com.example.virtual_pets.controllers;
 
 import com.example.virtual_pets.dto.PetRequest;
 import com.example.virtual_pets.models.Pet;
+import com.example.virtual_pets.petactions.FeedCommand;
+import com.example.virtual_pets.petactions.PlayCommand;
 import com.example.virtual_pets.services.PetService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,17 @@ import java.util.UUID;
 @RequestMapping("/pets")
 public class PetController {
     private final PetService petService;
+    private final FeedCommand feedCommand;
+    private final PlayCommand playCommand;
 
-    public PetController(PetService petService) {
+    public PetController(
+            PetService petService,
+            FeedCommand feedCommand,
+            PlayCommand playCommand
+    ) {
         this.petService = petService;
+        this.feedCommand = feedCommand;
+        this.playCommand = playCommand;
     }
 
     @GetMapping()
@@ -34,7 +44,6 @@ public class PetController {
     @PostMapping()
     public ResponseEntity<Pet> createPet(@Valid @RequestBody PetRequest petRequest){
         Pet newPet = petService.createPet(
-                petRequest.ownerId(),
                 petRequest.name(),
                 petRequest.petCharacter()
         );
@@ -54,5 +63,23 @@ public class PetController {
     public ResponseEntity<Pet> deletePet(@PathVariable UUID id){
        Pet deletedPet = petService.delete(id);
         return ResponseEntity.ok(deletedPet);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<String> performAction(
+            @PathVariable UUID id,
+            @RequestParam String action
+    ){
+        return switch (action.toLowerCase()) {
+            case "play" -> {
+                playCommand.execute(id);
+                yield ResponseEntity.ok("Pet played successfully.");
+            }
+            case "feed" -> {
+                feedCommand.execute(id);
+                yield ResponseEntity.ok("Pet fed successfully.");
+            }
+            default -> ResponseEntity.status(400).body("Invalid action.");
+        };
     }
 }

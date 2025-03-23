@@ -46,14 +46,14 @@ public class Pet {
     private int energyLevel;
     @Column(name = "hunger_level", nullable = false)
     private int hungerLevel;
-    @Column(name = "playfulness_level", nullable = false)
-    private int playfulnessLevel;
+    @Column(name = "happiness_level", nullable = false)
+    private int happinessLevel;
     @Column(name = "max_energy", nullable = false)
     private int maxEnergy;
     @Column(name = "max_hunger", nullable = false)
     private int maxHunger;
-    @Column(name = "max_playfulness", nullable = false)
-    private int maxPlayfulness;
+    @Column(name = "max_happiness", nullable = false)
+    private int maxHappiness;
     @Column(nullable = false)
     private boolean deleted;
 
@@ -73,10 +73,10 @@ public class Pet {
         this.name = name;
         this.energyLevel = 100;
         this.hungerLevel = 100;
-        this.playfulnessLevel = 100;
+        this.happinessLevel = 100;
         this.maxEnergy = 100;
         this.maxHunger = 100;
-        this.maxPlayfulness = 100;
+        this.maxHappiness = 100;
         this.deleted = false;
     }
 
@@ -176,12 +176,12 @@ public class Pet {
         this.hungerLevel = hungerLevel;
     }
 
-    public int getPlayfulnessLevel() {
-        return playfulnessLevel;
+    public int getHappinessLevel() {
+        return happinessLevel;
     }
 
-    public void setPlayfulnessLevel(int playfulnessLevel) {
-        this.playfulnessLevel = playfulnessLevel;
+    public void setHappinessLevel(int happinessLevel) {
+        this.happinessLevel = happinessLevel;
     }
 
     public int getMaxEnergy() {
@@ -200,12 +200,12 @@ public class Pet {
         this.maxHunger = maxHunger;
     }
 
-    public int getMaxPlayfulness() {
-        return maxPlayfulness;
+    public int getMaxHappiness() {
+        return maxHappiness;
     }
 
-    public void setMaxPlayfulness(int maxPlayfulness) {
-        this.maxPlayfulness = maxPlayfulness;
+    public void setMaxHappiness(int maxHappiness) {
+        this.maxHappiness = maxHappiness;
     }
 
     public boolean isDeleted() {
@@ -214,5 +214,15 @@ public class Pet {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    @PostUpdate
+    public void updatePetTypeAfterChange() {
+
+        if (this.energyLevel > 50 && this.happinessLevel > 50) {
+            this.petType = PetType.YELLOW;
+        } else {
+            this.petType = PetType.PURPLE;
+        }
     }
 }

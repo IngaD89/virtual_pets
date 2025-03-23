@@ -4,5 +4,5 @@ import com.example.virtual_pets.models.enums.PetCharacter;
 
 import java.util.UUID;
 
-public record PetRequest(UUID ownerId, String name, PetCharacter petCharacter) {
+public record PetRequest(String name, PetCharacter petCharacter) {
 }

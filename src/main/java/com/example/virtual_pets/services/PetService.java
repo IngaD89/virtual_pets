@@ -14,6 +14,7 @@ import com.example.virtual_pets.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,20 +36,25 @@ public class PetService {
     }
 
 
-    //TODO quitar el ownerId como parametro de creacion
     public Pet createPet(
-            UUID ownerId,
             String name,
             PetCharacter petCharacter
     ) {
+        UUID ownerId = authenticationService.getAuthenticatedUserId();
+
+        if (ownerId == null) {
+            throw new UnauthorizedAccessException("User must be authenticated to create a pet");
+        }
+
         User petOwner = this.userRepository
                 .findById(ownerId)
                 .orElseThrow(UserNotFoundException::new);
 
         Pet newPet = new Pet(petOwner.getId(), name, petCharacter);
-        return this.petRepository.save(newPet);
 
+        return this.petRepository.save(newPet);
     }
+
 
     public Pet getPetById(UUID petId) {
         return this.petRepository.findById(petId)
@@ -58,7 +64,29 @@ public class PetService {
     }
 
 
-    //TODO este metodo devuleve mensaje correcto con codigo incorecto al no encontrar ningun pet
+//    //TODO este metodo devuleve mensaje correcto con codigo incorecto al no encontrar ningun pet
+//    public List<Pet> getAllPets() {
+//        String userRole = authenticationService.getAuthenticatedUserRole();
+//        UUID userId = authenticationService.getAuthenticatedUserId();
+//
+//        if (authenticationService.isAdmin(userRole)) {
+//            List<Pet> allPets = this.petRepository
+//                    .findAll()
+//                    .stream()
+//                    .filter(pet -> !pet.isDeleted())
+//                    .toList();
+//            if (allPets.isEmpty()) {
+//                throw new EmptyPetListException();
+//            }
+//            return allPets;
+//        }
+//        List<Pet> userPets = this.petRepository.findByOwnerId(userId);
+//        if (userPets.isEmpty()) {
+//            throw new EmptyPetListException("No pet was found for user " + userId);
+//        }
+//        return userPets;
+//    }
+
     public List<Pet> getAllPets() {
         String userRole = authenticationService.getAuthenticatedUserRole();
         UUID userId = authenticationService.getAuthenticatedUserId();
@@ -69,16 +97,10 @@ public class PetService {
                     .stream()
                     .filter(pet -> !pet.isDeleted())
                     .toList();
-            if (allPets.isEmpty()) {
-                throw new EmptyPetListException();
-            }
-            return allPets;
+            return allPets.isEmpty() ? Collections.emptyList() : allPets;
         }
         List<Pet> userPets = this.petRepository.findByOwnerId(userId);
-        if (userPets.isEmpty()) {
-            throw new EmptyPetListException("No pet was found for user " + userId);
-        }
-        return userPets;
+        return userPets.isEmpty() ? Collections.emptyList() : userPets;
     }
 
     public Pet updatePet(
