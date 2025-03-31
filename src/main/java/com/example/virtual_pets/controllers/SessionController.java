@@ -10,10 +10,10 @@ import com.example.virtual_pets.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -51,4 +51,17 @@ public class SessionController {
 
         return ResponseEntity.ok(new LoginResponse(session.getId(), token));
     }
+
+    @DeleteMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        sessionService.logout();
+        return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<Map<String, String>> refreshSession() {
+        Map<String, String> response = sessionService.refreshSession();
+        return ResponseEntity.ok(response);
+    }
+
 }

@@ -2,10 +2,7 @@ package com.example.virtual_pets.exceptions;
 
 import com.example.virtual_pets.common.utils.ErrorResponseUtils;
 import com.example.virtual_pets.dto.ErrorResponse;
-import com.example.virtual_pets.exceptions.authExceptios.AuthenticationException;
-import com.example.virtual_pets.exceptions.authExceptios.IncorrectCredentialsException;
-import com.example.virtual_pets.exceptions.authExceptios.SessionAlreadyInUseException;
-import com.example.virtual_pets.exceptions.authExceptios.UnauthorizedAccessException;
+import com.example.virtual_pets.exceptions.authExceptios.*;
 import com.example.virtual_pets.exceptions.petExceptions.*;
 import com.example.virtual_pets.exceptions.userExceptions.*;
 import org.springframework.http.HttpStatus;
@@ -40,7 +37,8 @@ public class GlobalExceptionHandler {
             AuthenticationException.class,
             IncorrectCredentialsException.class,
             SessionAlreadyInUseException.class,
-            UnauthorizedAccessException.class
+            UnauthorizedAccessException.class,
+            SessionNotFoundException.class
     })
     public ResponseEntity<ErrorResponse> handleAuthExceptions(Exception e) {
         if (e instanceof AuthenticationException) {
@@ -51,6 +49,8 @@ public class GlobalExceptionHandler {
             return ErrorResponseUtils.createErrorResponse(HttpStatus.CONFLICT, e.getMessage());
         } else if (e instanceof UnauthorizedAccessException) {
             return ErrorResponseUtils.createErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } else if (e instanceof SessionNotFoundException) {
+            return ErrorResponseUtils.createErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
         } else {
             return ErrorResponseUtils.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }

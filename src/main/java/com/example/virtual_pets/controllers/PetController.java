@@ -1,11 +1,14 @@
 package com.example.virtual_pets.controllers;
 
 import com.example.virtual_pets.dto.PetRequest;
+import com.example.virtual_pets.exceptions.petExceptions.PetNotFoundException;
+import com.example.virtual_pets.exceptions.petExceptions.TooTiredPetException;
 import com.example.virtual_pets.models.Pet;
 import com.example.virtual_pets.petactions.FeedCommand;
 import com.example.virtual_pets.petactions.PlayCommand;
 import com.example.virtual_pets.services.PetService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,21 +68,16 @@ public class PetController {
         return ResponseEntity.ok(deletedPet);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<String> performAction(
-            @PathVariable UUID id,
-            @RequestParam String action
-    ){
-        return switch (action.toLowerCase()) {
-            case "play" -> {
-                playCommand.execute(id);
-                yield ResponseEntity.ok("Pet played successfully.");
-            }
-            case "feed" -> {
-                feedCommand.execute(id);
-                yield ResponseEntity.ok("Pet fed successfully.");
-            }
-            default -> ResponseEntity.status(400).body("Invalid action.");
-        };
+    @PostMapping("/{id}/play")
+    public ResponseEntity<Pet> play(@PathVariable UUID id) {
+            Pet updatedPet = playCommand.execute(id);
+            return ResponseEntity.ok(updatedPet);  // Devolvemos la mascota actualizada
     }
+
+    @PostMapping("/{id}/feed")
+    public ResponseEntity<Pet> feed(@PathVariable UUID id) {
+            Pet updatedPet = feedCommand.execute(id);
+            return ResponseEntity.ok(updatedPet);  // Devolvemos la mascota actualizada
+    }
+
 }

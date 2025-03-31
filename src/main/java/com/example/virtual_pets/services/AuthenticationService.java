@@ -29,8 +29,10 @@ public class AuthenticationService {
                 .orElseThrow(UserRoleNotMatchException::new);
     }
 
-    public boolean isAdmin(String role){
-        return "ROLE_ADMIN".equals(role) ? true : false;
+
+    public boolean isAdmin(String role) {
+        return "USER_ADMIN".equalsIgnoreCase(role);
     }
+
 
 }

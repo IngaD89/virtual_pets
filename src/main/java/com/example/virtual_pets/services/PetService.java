@@ -63,35 +63,11 @@ public class PetService {
                 ));
     }
 
-
-//    //TODO este metodo devuleve mensaje correcto con codigo incorecto al no encontrar ningun pet
-//    public List<Pet> getAllPets() {
-//        String userRole = authenticationService.getAuthenticatedUserRole();
-//        UUID userId = authenticationService.getAuthenticatedUserId();
-//
-//        if (authenticationService.isAdmin(userRole)) {
-//            List<Pet> allPets = this.petRepository
-//                    .findAll()
-//                    .stream()
-//                    .filter(pet -> !pet.isDeleted())
-//                    .toList();
-//            if (allPets.isEmpty()) {
-//                throw new EmptyPetListException();
-//            }
-//            return allPets;
-//        }
-//        List<Pet> userPets = this.petRepository.findByOwnerId(userId);
-//        if (userPets.isEmpty()) {
-//            throw new EmptyPetListException("No pet was found for user " + userId);
-//        }
-//        return userPets;
-//    }
-
     public List<Pet> getAllPets() {
         String userRole = authenticationService.getAuthenticatedUserRole();
         UUID userId = authenticationService.getAuthenticatedUserId();
 
-        if (authenticationService.isAdmin(userRole)) {
+        if (authenticationService.isAdmin(userRole.replace("ROLE_", ""))) {
             List<Pet> allPets = this.petRepository
                     .findAll()
                     .stream()
@@ -114,7 +90,8 @@ public class PetService {
                 .findById(petId)
                 .orElseThrow(PetNotFoundException::new);
 
-        if (!authenticationService.isAdmin(userRole) && !pet.getOwnerId().equals(userId)) {
+        if (!authenticationService.isAdmin(userRole.replace("ROLE_", ""))
+                && !pet.getOwnerId().equals(userId)) {
             throw new UnauthorizedAccessException("User does not have permission to update this pet");
         }
 
@@ -140,7 +117,8 @@ public class PetService {
                 .findById(petId)
                 .orElseThrow(PetNotFoundException::new);
 
-        if (!authenticationService.isAdmin(userRole) && !pet.getOwnerId().equals(userId)) {
+        if (!authenticationService.isAdmin(userRole.replace("ROLE_", ""))
+                && !pet.getOwnerId().equals(userId)) {
             throw new UnauthorizedAccessException("User does not have permission to delete this pet");
         }
 

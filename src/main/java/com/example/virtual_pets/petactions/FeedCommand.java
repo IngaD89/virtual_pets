@@ -3,10 +3,12 @@ package com.example.virtual_pets.petactions;
 import com.example.virtual_pets.exceptions.petExceptions.PetNotFoundException;
 import com.example.virtual_pets.models.Pet;
 import com.example.virtual_pets.repositories.PetRepository;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@Component
 public class FeedCommand implements PetActionCommand {
 
     private final PetRepository petRepository;
@@ -16,7 +18,7 @@ public class FeedCommand implements PetActionCommand {
     }
 
     @Override
-    public void execute(UUID id) {
+    public Pet execute(UUID id) {
         Pet pet = this
                 .petRepository
                 .findById(id)
@@ -39,5 +41,6 @@ public class FeedCommand implements PetActionCommand {
         pet.setLastFedAt(Instant.now());
         petRepository.save(pet);
 
+        return pet;
     }
 }

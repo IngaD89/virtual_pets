@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PetEnergyRecoveryService {
+public class PetHungerService {
 
     private final PetRepository petRepository;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public PetEnergyRecoveryService(
+    public PetHungerService(
             PetRepository petRepository,
             SimpMessagingTemplate messagingTemplate
     ) {
@@ -23,15 +23,17 @@ public class PetEnergyRecoveryService {
     }
 
     @Scheduled(fixedRate = 60000) // Corre cada 60 segundos
-    public void recoverEnergyForAllPets() {
+    public void decreaseHungerForAllPets() {
         List<Pet> pets = petRepository.findAll();
         for (Pet pet : pets) {
-            if (pet.getEnergyLevel() < pet.getMaxEnergy()) {
-                pet.setEnergyLevel(Math.min(pet.getEnergyLevel() - 5, pet.getMaxEnergy()));
+            if (pet.getHungerLevel() > 0) {
+                pet.setHungerLevel(Math.max(pet.getHungerLevel() - 5, 0));
+
             }
         }
         petRepository.saveAll(pets);
         messagingTemplate.convertAndSend("/topic/petUpdates", pets);
     }
+
 }
 

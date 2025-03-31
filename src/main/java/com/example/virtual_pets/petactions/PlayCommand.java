@@ -4,9 +4,11 @@ import com.example.virtual_pets.exceptions.petExceptions.PetNotFoundException;
 import com.example.virtual_pets.exceptions.petExceptions.TooTiredPetException;
 import com.example.virtual_pets.models.Pet;
 import com.example.virtual_pets.repositories.PetRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class PlayCommand implements PetActionCommand {
 
     private final PetRepository petRepository;
@@ -17,7 +19,7 @@ public class PlayCommand implements PetActionCommand {
 
 
     @Override
-    public void execute(UUID id) {
+    public Pet execute(UUID id) {
         Pet pet = petRepository
                 .findById(id)
                 .orElseThrow(PetNotFoundException::new);
@@ -33,5 +35,6 @@ public class PlayCommand implements PetActionCommand {
 
         petRepository.save(pet);
 
+        return pet;
     }
 }

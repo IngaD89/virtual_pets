@@ -49,11 +49,11 @@ public class Pet {
     @Column(name = "happiness_level", nullable = false)
     private int happinessLevel;
     @Column(name = "max_energy", nullable = false)
-    private int maxEnergy;
+    private final int maxEnergy = 100;
     @Column(name = "max_hunger", nullable = false)
-    private int maxHunger;
+    private int maxHunger = 100;
     @Column(name = "max_happiness", nullable = false)
-    private int maxHappiness;
+    private int maxHappiness = 100;
     @Column(nullable = false)
     private boolean deleted;
 
@@ -74,9 +74,6 @@ public class Pet {
         this.energyLevel = 100;
         this.hungerLevel = 100;
         this.happinessLevel = 100;
-        this.maxEnergy = 100;
-        this.maxHunger = 100;
-        this.maxHappiness = 100;
         this.deleted = false;
     }
 
@@ -188,10 +185,6 @@ public class Pet {
         return maxEnergy;
     }
 
-    public void setMaxEnergy(int maxEnergy) {
-        this.maxEnergy = maxEnergy;
-    }
-
     public int getMaxHunger() {
         return maxHunger;
     }
@@ -218,11 +211,15 @@ public class Pet {
 
     @PostUpdate
     public void updatePetTypeAfterChange() {
-
-        if (this.energyLevel > 50 && this.happinessLevel > 50) {
-            this.petType = PetType.YELLOW;
+        if (this.energyLevel > 20 && this.happinessLevel > 20) {
+            if (!this.petType.equals(PetType.YELLOW)) {
+                this.petType = PetType.YELLOW;
+            }
         } else {
-            this.petType = PetType.PURPLE;
+            if (!this.petType.equals(PetType.PURPLE)) {
+                this.petType = PetType.PURPLE;
+            }
         }
     }
+
 }
