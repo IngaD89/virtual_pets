@@ -21,17 +21,20 @@ public class PetEnergyRecoveryService {
         this.petRepository = petRepository;
         this.messagingTemplate = messagingTemplate;
     }
-
-    @Scheduled(fixedRate = 60000) // Corre cada 60 segundos
-    public void recoverEnergyForAllPets() {
+    @Scheduled(fixedRate = 6000) // Corre cada 60 segundos
+    public List<Pet> recoverEnergyForAllPets() {
         List<Pet> pets = petRepository.findAll();
         for (Pet pet : pets) {
             if (pet.getEnergyLevel() < pet.getMaxEnergy()) {
-                pet.setEnergyLevel(Math.min(pet.getEnergyLevel() - 5, pet.getMaxEnergy()));
+                int energyIncrease = (pet.getHungerLevel() < 20) ? 2 : 5;
+                pet.setEnergyLevel(Math.min(pet.getEnergyLevel() + energyIncrease, pet.getMaxEnergy()));
             }
         }
         petRepository.saveAll(pets);
         messagingTemplate.convertAndSend("/topic/petUpdates", pets);
+        return pets;
     }
+
+
 }
 

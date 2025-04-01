@@ -70,19 +70,19 @@ public class JwtUtils {
 
 
     public Claims extractClaims(String token) {
-       try{
-           Claims claims = Jwts
-                   .parser()
-                   .verifyWith(getSigningKey())
-                   .build()
-                   .parseSignedClaims(token)
-                   .getPayload();
-           LOGGER.info("Claims successfully extracted");
-           return claims;
-       }catch (JwtException e){
-           LOGGER.error("Error extracting claims from token: {}", token, e);
-           throw new JwtException("Error extracting claims", e);
-       }
+        try{
+            Claims claims = Jwts
+                    .parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+            LOGGER.info("Claims successfully extracted");
+            return claims;
+        }catch (JwtException e){
+            LOGGER.error("Error extracting claims from token: {}", token, e);
+            throw new JwtException("Error extracting claims", e);
+        }
     }
 
     public String extractToken(HttpServletRequest request) {
@@ -94,4 +94,3 @@ public class JwtUtils {
         return null;
     }
 }
-

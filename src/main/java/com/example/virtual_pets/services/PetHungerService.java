@@ -22,7 +22,7 @@ public class PetHungerService {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @Scheduled(fixedRate = 60000) // Corre cada 60 segundos
+    @Scheduled(fixedRate = 6000) // Corre cada 60 segundos
     public void decreaseHungerForAllPets() {
         List<Pet> pets = petRepository.findAll();
         for (Pet pet : pets) {
