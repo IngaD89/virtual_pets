@@ -38,7 +38,6 @@ public class FeedCommand implements PetActionCommand {
             }
         }
 
-        pet.setLastFedAt(Instant.now());
         petRepository.save(pet);
 
         return pet;

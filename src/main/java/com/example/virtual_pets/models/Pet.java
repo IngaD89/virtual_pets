@@ -27,13 +27,6 @@ public class Pet {
     private Instant createdAt;
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
-    @Column(name = "last_fed_at", nullable = false)
-    private Instant lastFedAt;
-    @Column(name = "last_played_at", nullable = false)
-    private Instant lastPlayedAt;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "pet_status", nullable = false)
-    private PetStatus petStatus;
     @Enumerated(EnumType.STRING)
     @Column(name = "pet_character", nullable = false)
     private PetCharacter petCharacter;
@@ -51,9 +44,9 @@ public class Pet {
     @Column(name = "max_energy", nullable = false)
     private final int maxEnergy = 100;
     @Column(name = "max_hunger", nullable = false)
-    private int maxHunger = 100;
+    private final int maxHunger = 100;
     @Column(name = "max_happiness", nullable = false)
-    private int maxHappiness = 100;
+    private final int maxHappiness = 100;
     @Column(nullable = false)
     private boolean deleted;
 
@@ -65,9 +58,6 @@ public class Pet {
         this.ownerId = ownerId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
-        this.lastFedAt = Instant.now();
-        this.lastPlayedAt = Instant.now();
-        this.petStatus = PetStatus.NEWBORN;
         this.petCharacter = petCharacter;
         this.petType = PetType.YELLOW;
         this.name = name;
@@ -107,30 +97,6 @@ public class Pet {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Instant getLastFedAt() {
-        return lastFedAt;
-    }
-
-    public void setLastFedAt(Instant lastFedAt) {
-        this.lastFedAt = lastFedAt;
-    }
-
-    public Instant getLastPlayedAt() {
-        return lastPlayedAt;
-    }
-
-    public void setLastPlayedAt(Instant lastPlayedAt) {
-        this.lastPlayedAt = lastPlayedAt;
-    }
-
-    public PetStatus getPetStatus() {
-        return petStatus;
-    }
-
-    public void setPetStatus(PetStatus petStatus) {
-        this.petStatus = petStatus;
     }
 
     public PetCharacter getPetCharacter() {
@@ -189,16 +155,8 @@ public class Pet {
         return maxHunger;
     }
 
-    public void setMaxHunger(int maxHunger) {
-        this.maxHunger = maxHunger;
-    }
-
     public int getMaxHappiness() {
         return maxHappiness;
-    }
-
-    public void setMaxHappiness(int maxHappiness) {
-        this.maxHappiness = maxHappiness;
     }
 
     public boolean isDeleted() {
