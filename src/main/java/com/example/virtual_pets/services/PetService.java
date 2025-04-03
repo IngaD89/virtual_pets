@@ -75,7 +75,10 @@ public class PetService {
                     .toList();
             return allPets.isEmpty() ? Collections.emptyList() : allPets;
         }
-        List<Pet> userPets = this.petRepository.findByOwnerId(userId);
+        List<Pet> userPets = this.petRepository.findByOwnerId(userId)
+                .stream()
+                .filter(pet -> !pet.isDeleted())
+                .toList();
         return userPets.isEmpty() ? Collections.emptyList() : userPets;
     }
 
